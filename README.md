@@ -13,5 +13,9 @@ Yes, I would, this is because testing the feature can be made into a small funct
 
 4. What do you expect to happen if we run our puppeteer tests with the field “headless” set to true?
 
+I will expect that the same test will run but there will be no browser UI.
+
 5. What would your beforeAll callback look like if you wanted to start from the settings page before every test case?
 
+
+One would have to modify the page contents by simulating a click by the user which goes to the settings page. This would change the page contents and the URL to the values that are needed.
