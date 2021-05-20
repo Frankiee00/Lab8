@@ -71,27 +71,44 @@ describe('Basic user flow for SPA ', () => {
 
   it('Test6: On first Entry page - checking <body> element classes', async () => {
     // implement test6: Clicking on the first journal entry should update the class attribute of <body> to ‘single-entry’
+    const classID = await page.$eval('body', (body) => {
+      return body.classList;
+    });
+
+    expect(classID[0]).toMatch('single-entry');
 
   });
 
   it('Test7: Clicking the settings icon, new URL should contain #settings', async () => {
     // implement test7: Clicking on the settings icon should update the URL to contain “/#settings”
-
-  });
+    await expect(page).toClick('header > img');
+    const url = await page.evaluate( () => location.href);
+    expect(url).toMatch('http://127.0.0.1:5500/#settings')
+  }, 10000);
 
   it('Test8: On Settings page - checking page header title', async () => {
     // implement test8: Clicking on the settings icon should update the header to be “Settings”
+    const header = await page.$eval('h1', (header) => {
+      return header.textContent;
+    });
 
+    expect(header == "Settings").toBe(true);
   });
 
   it('Test9: On Settings page - checking <body> element classes', async () => {
     // implement test9: Clicking on the settings icon should update the class attribute of <body> to ‘settings’
+    const classID = await page.$eval('body', (body) => {
+      return body.classList;
+    });
 
-  });
+    expect(classID[0]).toMatch('settings');
+  }, 10000);
 
   it('Test10: Clicking the back button, new URL should be /#entry1', async() => {
     // implement test10: Clicking on the back button should update the URL to contain ‘/#entry1’
-
+    await page.goBack();
+    const url = await page.url();
+    expect(url).toMatch('http://127.0.0.1:5500/#entry1');
   });
 
   // define and implement test11: Clicking the back button once should bring the user back to the home page
