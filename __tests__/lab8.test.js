@@ -137,13 +137,40 @@ describe('Basic user flow for SPA ', () => {
   });
 
   // define and implement test14: Verify the url is correct when clicking on the second entry
+  it('Test14: Verifying that the new URL contains /#entry2', async () => {
+    const entry = await page.$$('journal-entry');
+    const entry2 = entry[1];
+    await entry2.click();
+    await page.waitForSelector("entry-page");
 
+    const url = await page.url();
+    expect(url).toBe('http://127.0.0.1:5500/#entry2');
+  }, 10000);
 
   // define and implement test15: Verify the title is current when clicking on the second entry
+  it('Test15: Verifying that the tile is correct when on clicking on second entry', async () => {
+    const header = await page.$eval('h1', (header) => {
+      return header.textContent;
+    });
 
+    expect(header == "Entry 2").toBe(true);
+  })
 
   // define and implement test16: Verify the entry page contents is correct when clicking on the second entry
-
+  it('Test16: For second Entry page - checking <entry-page> contents', async () => {
+    const dataEntry = await page.$("entry-page");
+    const dataObject = await page.evaluate(dataEntry => dataEntry.entry, dataEntry);
+    expect(dataObject).toEqual(
+      { 
+        title: 'Run, Forrest! Run!',
+        date: '4/26/2021',
+        content: "Mama always said life was like a box of chocolates. You never know what you're gonna get.",
+        image: {
+          src: "https://s.abcnews.com/images/Entertainment/HT_forrest_gump_ml_140219_4x3_992.jpg",
+          alt: "forrest running"
+        }
+      });
+  });
 
   // create your own test 17
 
