@@ -112,13 +112,29 @@ describe('Basic user flow for SPA ', () => {
   });
 
   // define and implement test11: Clicking the back button once should bring the user back to the home page
-
+  it('Test11: Clicking the back button brings the user back to home page & check url', async() => {
+    await page.goBack();
+    const url = await page.url();
+    expect(url).toMatch('http://127.0.0.1:5500/');
+  });
 
   // define and implement test12: When the user if on the homepage, the header title should be “Journal Entries”
+  it('Test12: When user is on homepage, the header title should be “Journal Entries', async () => {
+    const header = await page.$eval('h1', (header) => {
+      return header.textContent;
+    });
 
+    expect(header == "Journal Entries").toBe(true);
+  });
 
   // define and implement test13: On the home page the <body> element should not have any class attribute 
+  it('Test13: On homepage, checking <body> element class to not hae any class attributes', async () => {
+    const classID = await page.$eval('body', (body) => {
+      return body.className;
+    });
 
+    expect(classID).toBe('');
+  });
 
   // define and implement test14: Verify the url is correct when clicking on the second entry
 
